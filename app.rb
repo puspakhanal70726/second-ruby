@@ -14,8 +14,8 @@ db = SQLite3::Database.new "./db/dev.db"
 Cuba.define do
   on root do
     student_array = db.execute("SELECT * FROM movies")
-    movies = student_array.map do |id, name, writer, actor, quality|
-      { :id => id, :name => name, :writer => writer, :actor => actor, :quality => quality }
+    movies = student_array.map do |id, name, country, writer, actor, actress, language, quality|
+      { :id => id, :name => name, :country => country, :writer => writer, :actor => actor, :actress => actress, :language => language, :quality => quality }
     end
     res.write view("index", movies: movies)
   end
@@ -27,12 +27,15 @@ Cuba.define do
   on post do
     on "create" do
       name = req.params["name"]
+      country = req.params["country"]
       writer = req.params["writer"]
       actor = req.params["actor"]
+      actress = req.params["actress"]
+      language = req.params["language"]
       quality = req.params["quality"]
       db.execute(
-        "INSERT INTO movies (name, writer, actor, quality) VALUES (?, ?, ?, ?)",
-        name, writer, actor, quality
+        "INSERT INTO movies (name, country, writer, actor, actress, language, quality) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        name, country, writer, actor, actress, language, quality
       )
       res.redirect "/"
     end

@@ -2,9 +2,12 @@
 <ul>
   <% movies.each do |movie| %>
     <li>
-      <%= movie[:name] %>
+      (<%= movie[:name] %>)
+      (<%= movie[:country] %>)
       (<%= movie[:writer] %>)
       (<%= movie[:actor] %>)
+      (<%= movie[:actress] %>)
+      (<%= movie[:language] %>)
       (<%= movie[:quality] %>)
 
       <form action="/delete/<%= movie[:id] %>" method="post" class="delete">
