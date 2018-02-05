@@ -4,6 +4,7 @@ require "cuba/render"
 require "erb"
 require "sqlite3"
 
+
 Cuba.use Rack::Session::Cookie, :secret => ENV["SESSION_SECRET"] || "__a_very_long_string__"
 
 Cuba.plugin Cuba::Safe
@@ -15,7 +16,7 @@ Cuba.define do
   on root do
     student_array = db.execute("SELECT * FROM movies")
     movies = student_array.map do |id, name, country, writer, actor, actress, language, quality|
-      { :id => id, :name => name, :country => country, :writer => writer, :actor => actor, :actress => actress, :language => language, :quality => quality }
+      OpenStruct.new(:id => id, :name => name, :country => country, :writer => writer, :actor => actor, :actress => actress, :language => language, :quality => quality )
     end
     res.write view("index", movies: movies)
   end
